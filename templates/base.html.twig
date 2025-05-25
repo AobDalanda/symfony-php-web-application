@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Gestion des Commandes de Ciments{% endblock %}</title>
+        
+        {# Tailwind CSS #}
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+        {# Font Awesome #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        {# Google Fonts #}
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        
+        {% block stylesheets %}
+            <style>
+                body {
+                    font-family: 'Inter', sans-serif;
+                }
+            </style>
+        {% endblock %}
+    </head>
+    <body class="h-screen bg-gray-100">
+        {% if app.user %}
+            <nav class="bg-gray-800">
+                <div class="mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center justify-between h-16">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 text-white font-bold text-xl">
+                                CementManager
+                            </div>
+                            <div class="hidden md:block">
+                                <div class="ml-10 flex items-baseline space-x-4">
+                                    <a href="{{ path('admin_dashboard') }}" 
+                                       class="{{ app.request.get('_route') == 'admin_dashboard' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">
+                                        <i class="fas fa-chart-line mr-2"></i>Tableau de bord
+                                    </a>
+                                    <a href="{{ path('admin_order_index') }}" 
+                                       class="{{ app.request.get('_route') starts with 'admin_order' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">
+                                        <i class="fas fa-shopping-cart mr-2"></i>Commandes
+                                    </a>
+                                    <a href="{{ path('admin_stock_index') }}" 
+                                       class="{{ app.request.get('_route') starts with 'admin_stock' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">
+                                        <i class="fas fa-box mr-2"></i>Stocks
+                                    </a>
+                                    <a href="{{ path('admin_client_index') }}" 
+                                       class="{{ app.request.get('_route') starts with 'admin_client' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">
+                                        <i class="fas fa-users mr-2"></i>Clients
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="ml-4 flex items-center md:ml-6">
+                                <div class="relative">
+                                    <div class="flex items-center">
+                                        <span class="text-gray-300 text-sm mr-4">
+                                            {{ app.user.firstName }} {{ app.user.lastName }}
+                                        </span>
+                                        <a href="{{ path('app_logout') }}" 
+                                           class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                            <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        {% endif %}
+
+        <main class="py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {% if block('header') is defined %}
+                    <div class="pb-5 border-b border-gray-200 mb-6">
+                        <h1 class="text-2xl font-bold leading-6 text-gray-900">
+                            {% block header %}{% endblock %}
+                        </h1>
+                    </div>
+                {% endif %}
+
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="mb-4 rounded-md p-4 {% if label == 'success' %}bg-green-50 text-green-800{% else %}bg-red-50 text-red-800{% endif %}">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    {% if label == 'success' %}
+                                        <i class="fas fa-check-circle"></i>
+                                    {% else %}
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium">
+                                        {{ message }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
