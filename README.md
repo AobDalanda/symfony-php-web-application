@@ -1,108 +1,121 @@
+# Système de Gestion des Commandes de Ciments
 
-Built by https://www.blackbox.ai
+Une application web Symfony pour la gestion des commandes de ciments, des stocks, et des clients.
 
----
+## Fonctionnalités
 
-# Project Name
+- Gestion des stocks de ciment
+- Gestion des clients
+- Gestion des commandes
+- Tableau de bord avec statistiques
+- Système d'authentification sécurisé
+- Interface responsive avec Tailwind CSS
 
-## Project Overview
-This project is a Symfony-based application designed to leverage the power of PHP 8.1 and modern Symfony components. It provides a flexible framework for building web applications with a rich feature set supported by Symfony's robust libraries. Designed with best practices in mind, this project aims to deliver high performance and maintainability.
+## Prérequis
+
+- PHP 8.1 ou supérieur
+- Composer
+- MySQL/MariaDB
+- Node.js et npm (pour Tailwind CSS)
 
 ## Installation
-To get started with the project, you need to have PHP (>=8.1) installed on your machine. Additionally, you should have Composer set up as the dependency manager for PHP. Follow these steps to install the project:
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   ```
-
-2. Navigate into the project directory:
-   ```bash
-   cd <project-directory>
-   ```
-
-3. Install the dependencies using Composer:
-   ```bash
-   composer install
-   ```
-
-4. Set up your environment variables:
-   - Create a `.env` file based on the `.env.example` provided (not included in the content but generally found in Symfony projects).
-   - Configure your database and other service settings as needed.
-
-5. Run the necessary commands to clear the cache and set up the assets:
-   ```bash
-   composer run-script auto-scripts
-   ```
-
-## Usage
-Once installed, you can start using the Symfony console commands to run the application, manage migrations, or generate code. For example:
-
+1. Cloner le dépôt :
 ```bash
-php bin/console server:run
+git clone [url-du-depot]
+cd [nom-du-projet]
 ```
 
-This will start the web server, and you can access your application at `http://localhost:8000`.
-
-## Features
-- Built with Symfony 6.4, providing access to the latest features and improvements.
-- Supports Symfony Components like Console, Dotenv, and more to streamline development.
-- Easy asset management and configuration through Symfony's built-in commands.
-- Modular architecture utilizing autoloading for easy maintainability.
-
-## Dependencies
-The project relies on several key dependencies that are specified in `composer.json`:
-
-### Required Packages
-- `php (>=8.1)`
-- `ext-ctype`
-- `ext-iconv`
-- `symfony/console (6.4.*)`
-- `symfony/dotenv (6.4.*)`
-- `symfony/flex (^2)`
-- `symfony/framework-bundle (6.4.*)`
-- `symfony/runtime (6.4.*)`
-- `symfony/yaml (6.4.*)`
-
-### Development Packages
-- `knplabs/knp-snappy-bundle`
-- `symfony/form (6.4.*)`
-- `symfony/maker-bundle`
-- `symfony/orm-pack`
-- `symfony/security-bundle (6.4.*)`
-- `symfony/twig-bundle (6.4.*)`
-- `symfony/validator (6.4.*)`
-
-## Project Structure
-The project follows a standard Symfony structure:
-
-```
-/project-root
-├── /src               # Source code of the application
-│   ├── /Controller    # Controllers for handling requests
-│   ├── /Entity        # Doctrine entities
-│   ├── /Repository     # Repository classes for data access
-│   ├── ...           # Other directories as needed
-│
-├── /tests             # Unit and functional tests
-│   └── /Controller     # Tests for the controllers
-│
-├── /config            # Configuration files for the application
-│
-├── /public            # Publicly accessible files (entry point)
-│   └── index.php      # Main entry point for the application
-│
-├── composer.json      # PHP dependencies and project settings
-└── ...                # Other project files
+2. Installer les dépendances PHP :
+```bash
+composer install
 ```
 
-This structure enhances organization and allows for scalable development practices.
+3. Configurer la base de données dans le fichier `.env` :
+```
+DATABASE_URL="mysql://[user]:[password]@127.0.0.1:3306/[database_name]?serverVersion=8.0"
+```
 
-## Contributing
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+4. Créer la base de données et appliquer les migrations :
+```bash
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+```
 
-## License
-This project is proprietary. Please refer to the project-specific license for details.
+5. Créer l'utilisateur administrateur :
+```bash
+php bin/console app:create-admin
+```
+Cela créera un utilisateur admin avec les identifiants suivants :
+- Email : admin@example.com
+- Mot de passe : admin123
 
-## Contact
-For any questions or suggestions, please contact the project maintainers or open an issue in the repository.
+6. Lancer le serveur de développement :
+```bash
+symfony server:start
+```
+
+## Structure du Projet
+
+- `src/Entity/` : Entités Doctrine (User, Stock, Client, Order, OrderItem)
+- `src/Controller/` : Contrôleurs de l'application
+- `src/Form/` : Types de formulaires
+- `src/Repository/` : Repositories Doctrine
+- `templates/` : Templates Twig
+- `config/` : Fichiers de configuration
+
+## Utilisation
+
+1. Accéder à l'application via : `http://localhost:8000`
+2. Se connecter avec les identifiants administrateur
+3. Commencer par configurer les stocks de ciment
+4. Ajouter des clients
+5. Créer et gérer les commandes
+
+## Fonctionnalités Principales
+
+### Gestion des Stocks
+- Ajout/modification/suppression de produits
+- Suivi des quantités
+- Alertes de stock bas
+- Historique des mouvements
+
+### Gestion des Clients
+- Création de fiches clients
+- Historique des commandes par client
+- Coordonnées et informations de contact
+
+### Gestion des Commandes
+- Création de nouvelles commandes
+- Suivi du statut des commandes
+- Historique complet
+- Calcul automatique des montants
+
+### Tableau de Bord
+- Vue d'ensemble des activités
+- Statistiques des ventes
+- Suivi des stocks
+- Alertes et notifications
+
+## Sécurité
+
+- Authentification requise pour accéder à l'application
+- Différents niveaux d'accès (ROLE_USER, ROLE_ADMIN)
+- Protection CSRF sur les formulaires
+- Validation des données
+
+## Maintenance
+
+Pour mettre à jour la base de données après des modifications d'entités :
+```bash
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+```
+
+## Support
+
+Pour toute question ou problème, veuillez créer une issue dans le dépôt GitHub.
+
+## Licence
+
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
