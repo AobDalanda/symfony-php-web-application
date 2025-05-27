@@ -15,15 +15,14 @@ Une application web Symfony pour la gestion des commandes de ciments, des stocks
 
 - PHP 8.1 ou supérieur
 - Composer
-- MySQL/MariaDB
-- Node.js et npm (pour Tailwind CSS)
+- SQLite3
 
 ## Installation
 
-1. Cloner le dépôt :
+1. Décompressez l'archive:
 ```bash
-git clone [url-du-depot]
-cd [nom-du-projet]
+unzip cement-orders.zip
+cd cement-orders
 ```
 
 2. Installer les dépendances PHP :
@@ -31,18 +30,13 @@ cd [nom-du-projet]
 composer install
 ```
 
-3. Configurer la base de données dans le fichier `.env` :
-```
-DATABASE_URL="mysql://[user]:[password]@127.0.0.1:3306/[database_name]?serverVersion=8.0"
-```
-
-4. Créer la base de données et appliquer les migrations :
+3. Créer la base de données et appliquer les migrations :
 ```bash
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 ```
 
-5. Créer l'utilisateur administrateur :
+4. Créer l'utilisateur administrateur :
 ```bash
 php bin/console app:create-admin
 ```
@@ -50,9 +44,9 @@ Cela créera un utilisateur admin avec les identifiants suivants :
 - Email : admin@example.com
 - Mot de passe : admin123
 
-6. Lancer le serveur de développement :
+5. Lancer le serveur de développement :
 ```bash
-symfony server:start
+php -S localhost:8000 -t public/
 ```
 
 ## Structure du Projet
